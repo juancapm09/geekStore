@@ -1,7 +1,4 @@
-# felipe-diaz-back
-felipe-diaz-back
-
-Cube Sum Range Query webapp problem for Rappi interview process
+# Geek Store
 
 ---
 run the project using
