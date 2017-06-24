@@ -1,0 +1,142 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.emptyMessage {
+    font-weight: bold;
+    color: red;
+    font-size: 1.2em;
+}
+
+.infoMessage {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+li {
+    margin-bottom: 7px;
+    font-size: 1.2em;
+}
+
+li>button {
+    margin-left: 6px;
+}
+
+.product>button>span {
+    color: green;
+}
+
+.cart-list button>span {
+    color: red;
+}
+
+button>span {
+    color: #286090;
+    padding: 0.2em;
+}
+
+.product {
+    margin: 0.5em;
+    padding: 1em;
+    border: #777 solid 1px;
+}
+
+.product>label {
+    padding: 0.5em;
+    min-height: 2.75em;
+    width: 100%;
+    text-align: center;
+}
+
+.product>label>input[type=number] {
+    width: 50%;
+    text-align: center;
+    margin: 0.2em auto;
+}
+
+.product>button {
+    padding: 0.5em;
+    float: right;
+}
+
+.title {
+    background-color: #a6c307;
+    min-height: 4em !important;
+}
+
+.cart-list,
+.invoice {
+    width: 85%;
+    margin: 1em auto;
+}
+
+.cart-list td,
+.cart-list th,
+.invoice td,
+.invoice th {
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+    padding: 5px;
+    min-width: 2.5em;
+    text-align: center;
+}
+
+.invoice th,
+.invoice td {
+    border: solid 1px black;
+}
+
+.cart-list tr:first-child,
+.invoice tr:first-child {
+    font-weight: 900;
+}
+
+.cart-list tr:nth-child(even), .invoice tr:first-child {
+    background-color: #CCC;
+}
+
+.print-invoice {
+    border: solid 1px black;
+    margin: 0.5em;
+    padding: 2em;
+    min-width: 580px;
+    font-family: monospace;
+}
+
+.invoice-header {
+    text-align: center;
+    font-family: fantasy;
+    font-size: x-large;
+    background-color: #4f5d73;
+    color: white;
+}
+
+.invoice-logo {
+    float: left;
+    margin: 1em;
+}
+
+.invoice-details {
+    float: right;
+    margin-top: 1em;
+}
+
+.invoice-logo > span {
+    margin: 0.5em;
+    font-family: cursive;
+    font-size: large;
+    font-weight: 900;
+}
+
+.invoice-logo > img {
+    width: 80px;
+}
+
+.print-invoice > div {
+    padding: 0.25em;
+}

@@ -1,4 +1,0 @@
-Ejecutar los siguientes comandos
-
-npm install
-npm start
