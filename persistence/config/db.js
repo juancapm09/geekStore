@@ -3,10 +3,12 @@
  */
 
 var Product = require('../../models/Product');
+var Client = require('../../models/Client');
 
 var db = (function() {
     var stock = [];
     var bills = [];
+    var clients = [];
 
     (function() {
         stock.push(new Product(1, 'Maestro Yoda', '75000', 'COP'));
@@ -17,7 +19,11 @@ var db = (function() {
         stock.push(new Product(6, 'Jar Jar Binks Gobernador', '800', 'MXN'));
     })();
 
-    return { stock, bills };
+    (function() {
+        clients.push(new Client(1, 'juan.perez', 'juan.perez'));
+    })();
+
+    return { stock, bills, clients };
 })();
 
 module.exports = db;

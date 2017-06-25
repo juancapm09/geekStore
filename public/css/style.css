@@ -1,6 +1,7 @@
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 a {
@@ -18,16 +19,11 @@ a {
     font-size: 1.2em;
 }
 
-li {
-    margin-bottom: 7px;
-    font-size: 1.2em;
+.container>h1 {
+    text-align: center;
 }
 
-li>button {
-    margin-left: 6px;
-}
-
-.product>button>span {
+.product button>span, .history-list button>span {
     color: green;
 }
 
@@ -41,9 +37,10 @@ button>span {
 }
 
 .product {
-    margin: 0.5em;
     padding: 1em;
+    margin-bottom: 30px;
     border: #777 solid 1px;
+    float: left;
 }
 
 .product>label {
@@ -59,7 +56,7 @@ button>span {
     margin: 0.2em auto;
 }
 
-.product>button {
+.product button {
     padding: 0.5em;
     float: right;
 }
@@ -70,6 +67,7 @@ button>span {
 }
 
 .cart-list,
+.history-list,
 .invoice {
     width: 85%;
     margin: 1em auto;
@@ -77,6 +75,8 @@ button>span {
 
 .cart-list td,
 .cart-list th,
+.history-list td,
+.history-list th,
 .invoice td,
 .invoice th {
     border-top: solid 1px black;
@@ -91,12 +91,13 @@ button>span {
     border: solid 1px black;
 }
 
-.cart-list tr:first-child,
+.cart-list tr:first-child, .history-list tr:first-child,
 .invoice tr:first-child {
     font-weight: 900;
 }
 
-.cart-list tr:nth-child(even), .invoice tr:first-child {
+.cart-list tr:nth-child(even), .history-list tr:nth-child(even),
+.invoice tr:first-child {
     background-color: #CCC;
 }
 
@@ -106,6 +107,7 @@ button>span {
     padding: 2em;
     min-width: 580px;
     font-family: monospace;
+    max-width: 1000px;
 }
 
 .invoice-header {
@@ -126,17 +128,79 @@ button>span {
     margin-top: 1em;
 }
 
-.invoice-logo > span {
+.invoice-logo>span {
     margin: 0.5em;
     font-family: cursive;
     font-size: large;
     font-weight: 900;
 }
 
-.invoice-logo > img {
+.invoice-logo>img {
     width: 80px;
 }
 
-.print-invoice > div {
+.print-invoice>div {
     padding: 0.25em;
+}
+
+.nav {
+    margin: 0.25em;
+}
+
+.nav-pills>li.active, .nav-pills>li.active:hover {
+    color: #000;
+    background-color: #a6c307;
+    font-weight: bold;
+    cursor: default;
+}
+
+.nav-pills>li {
+    border-radius: 4px;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.nav-pills>li+li {
+    margin-left: 2px;
+}
+
+.nav-pills>li:hover {
+    background-color: #EEE;
+    color: #777;
+}
+
+.tab-div {
+    width: 100%;
+    margin: auto;
+    padding: 1em;
+}
+
+.outer-container {
+    margin-bottom: 0.5em;
+}
+
+@media screen and (max-width: 450px) {
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .outer-container {
+        overflow: scroll;
+        width: 100%;
+    }
+
+    .print-invoice {
+        max-width: 450px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .outer-container {
+        overflow: scroll;
+        overflow-y: hidden;
+        width: 100%;
+    }
 }

@@ -15,9 +15,10 @@ var ProductsController = require('./ProductsController');
  * @param app
  */
 function Controllers(app){
-    //TODO
-    app.post('/api/invoice', InvoicesController.createInvoice);
-    app.get('/api/products', ProductsController.getProducts);
+    app.post('/api/postInvoice', InvoicesController.createInvoice);
+    app.get('/api/getInvoice', InvoicesController.getInvoice);
+    app.get('/api/getHistory', InvoicesController.getHistory);
+    app.get('/api/getProducts', ProductsController.getProducts);
   }
 
 module.exports   =  Controllers;

@@ -1,8 +1,8 @@
 "use strict"
 
-function Bill (id, clientId) {
+function Bill (id, userName) {
     this.id = id;
-    this.clientId = clientId;
+    this.userName = userName;
     this.items = [];
     this.tax = 0;
     this.purchase = 0;

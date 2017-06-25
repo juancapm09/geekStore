@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/angular.min.js"></script>
+    <script src="js/vendor/angular.min.js"></script>
+    <script src="js/vendor/scroll.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/helper.js"></script>
 </head>
 
 <body>
@@ -16,14 +18,17 @@
         <div class="row hidden-print">
             <!-- To Buy List -->
             <div class="col-md-12">
-                <div class="col-xs-10 col-sm-5 col-md-3 col-lg-2 product" ng-repeat="prd in stock">
-                    <label class="title">{{prd.name}}</label>
-                    <label for="quantity">Cantidad: <input class="form-control" ng-model="prd.quantity" id="quantity" type="number" min="1" step="1" value="1" required></label>
-                    <label></b>Precio:</b> $ <span>{{prd.price}}</span> {{prd.currency}}</label>
-                    <button class="btn btn-default" ng-click="addProduct($index)"><span class="glyphicon glyphicon-ok"></span>Add to Cart</button></br>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="prd in stock">
+                    <div class="product">
+                        <label class="title">{{prd.name}}</label>
+                        <label for="quantity">Cantidad: <input class="form-control" ng-model="prd.quantity" id="quantity" type="number" min="1" step="1" value="1" required></label>
+                        <label></b>Precio:</b> $ <span>{{prd.price}}</span> {{prd.currency}}</label>
+                        <div><button class="btn btn-default" ng-click="addProduct($index)"><span class="glyphicon glyphicon-ok"></span>Add to Cart</button></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <hr>
         <div class="row hidden-print">
             <div class="col-md-12">
                 <h2>Productos Agregados</h2>
@@ -40,7 +45,7 @@
                             <td>{{product.name}}</td>
                             <td>{{product.quantity}}</td>
                             <td>{{ product.value | currency:"COP$"}}</td>
-                            <td><button class="btn btn-default" ng-click="removeProduct(product.id)"><span class="glyphicon glyphicon-remove"></span> Remove</button></td>
+                            <td><button class="btn btn-default" ng-click="removeProduct(product.id)"><span class="glyphicon glyphicon-remove"></span><label class="hidden-xs">Eliminar</label></button></td>
                         </tr>
                     </table>
                     <button class="btn btn-default" ng-click="buyProducts()"><span class="glyphicon glyphicon-download"></span>Comprar</button>
@@ -48,55 +53,85 @@
             </div>
             <!-- Already Bought List -->
         </div>
+        <hr>
         <div class="row">
+            <ul class="nav nav-pills hidden-print">
+                <li id="invoice" class="tab active">Factura</li>
+                <li id="history" ng-click="getHistory()" class="tab">Historico</li>
+            </ul>
             <div class="col-md-12">
-                <div class="row">
-                    <h2 class="hidden-print">Factura emitida </h2>
-                    <span class="infoMessage" ng-if="invoice == null">No se han realizado la compra</span>
+                <div id="invoice-div" class="tab-div">
+                    <h2 class="hidden-print">Factura</h2>
+                    <span class="infoMessage" ng-if="invoice == null">No se ha realizado ninguna compra</span>
                     <div ng-if="invoice != null">
-                        <div class="print-invoice">
-                            <div class="invoice-header">Factura</div>
-                            <div class="invoice-logo">
-                                <span>Geek Store</span><img src="./images/logo.png" alt="logo">
+                        <div class="outer-container">
+                            <div class="print-invoice">
+                                <div class="invoice-header">Factura</div>
+                                <div class="invoice-logo">
+                                    <span>Geek Store</span><img src="./images/logo.png" alt="logo">
+                                </div>
+                                <div class="invoice-details">
+                                    <div class="emptyMessage">Factura N° {{invoice.id}}</div>
+                                    <div><b>Fecha:</b> {{invoice.date}}</div>
+                                    <div><b>Cliente:</b> {{invoice.userName}}</div>
+                                </div>
+                                <table class="invoice">
+                                    <tr>
+                                        <th>Cantidad</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>IVA</th>
+                                    </tr>
+                                    <tr ng-repeat="item in invoice.items">
+                                        <td>{{item.qty}}</td>
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.value | currency:"COP$"}}</td>
+                                        <td>{{item.tax | currency:"COP$"}}</td>
+                                    </tr>
+                                </table>
+                                <table class="invoice">
+                                    <tr>
+                                        <th>Compra Neta</th>
+                                        <th>IVA</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{invoice.purchase | currency:"COP$"}}</td>
+                                        <td>{{invoice.tax | currency:"COP$"}}</td>
+                                        <td>{{invoice.total | currency:"COP$"}}</td>
+                                    </tr>
+                                </table>
                             </div>
-                            <div class="invoice-details">
-                                <div class="emptyMessage">Factura N° {{invoice.id}}</div>
-                                <div><b>Fecha:</b> {{invoice.date}}</div>
-                                <div><b>Cliente:</b> {{invoice.clientId}}</div>
-                            </div>
-                            <table class="invoice">
-                                <tr>
-                                    <th>Cantidad</th>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>IVA</th>
-                                </tr>
-                                <tr ng-repeat="item in invoice.items">
-                                    <td>{{item.qty}}</td>
-                                    <td>{{item.name}}</td>
-                                    <td>{{item.value | currency:"COP$"}}</td>
-                                    <td>{{item.tax | currency:"COP$"}}</td>
-                                </tr>
-                            </table>
-                            <table class="invoice">
-                                <tr>
-                                    <th>Compra Neta</th>
-                                    <th>IVA</th>
-                                    <th>Total</th>
-                                </tr>
-                                <tr>
-                                    <td>{{invoice.purchase | currency:"COP$"}}</td>
-                                    <td>{{invoice.tax | currency:"COP$"}}</td>
-                                    <td>{{invoice.total | currency:"COP$"}}</td>
-                                </tr>
-                            </table>
                         </div>
-                        <button class="btn btn-default hidden-print" ng-click="print()"><span class="glyphicon glyphicon-upload"></span> Imprimir</button>
+                        <button class="btn btn-default hidden-print" onclick="CommonUtils.print()"><span class="glyphicon glyphicon-upload"></span> Imprimir</button>
+                    </div>
+                </div>
+                <div id="history-div" class="tab-div hidden-print" style="display: none">
+                    <h2>Historial de compras</h2>
+                    <span class="infoMessage" ng-if="bills.length == 0">No se han realizado compras</span>
+                    <div ng-if="bills.length > 0">
+                        <table class="history-list">
+                            <tr>
+                                <th>Factura</th>
+                                <th class="hidden-xs">Fecha</th>
+                                <th class="hidden-xs hidden-sm">Compra Neta</th>
+                                <th class="hidden-xs hidden-sm">IVA</th>
+                                <th>Total</th>
+                                <th>Ver</th>
+                            </tr>
+                            <tr ng-repeat="item in bills">
+                                <td>{{item.id}}</td>
+                                <td class="hidden-xs">{{item.date}}</td>
+                                <td class="hidden-xs hidden-sm">{{item.purchase | currency:"COP$"}}</td>
+                                <td class="hidden-xs hidden-sm">{{item.tax | currency:"COP$"}}</td>
+                                <td>{{item.total | currency:"COP$"}}</td>
+                                <td><button class="btn btn-default" ng-click="loadInvoice(item.id)"><span class="glyphicon glyphicon-download"></span>Ver</button></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
