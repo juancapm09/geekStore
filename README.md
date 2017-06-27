@@ -21,7 +21,7 @@ the bill.
 
 Instructions to set up the project and run it.
 
-###DB
+### DB
 
 The MongoDB service was used to store the information related to this project. In order to 
 successfully run it, you must install and run the mongo service. Check 
