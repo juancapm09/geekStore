@@ -1,8 +1,10 @@
 var CommonUtils = (function () {
+    // Calls the print option
     var print = function () {
         window.print();
     }
 
+    // Swith between tabs
     var setCurrentTab = function (e) {
         var element = e.target;
 
@@ -22,10 +24,11 @@ var CommonUtils = (function () {
         document.getElementById(element.id + "-div").style.display = "block";
     }
 
+    // Handles especif situations when Resizing 
     var onResize = function (e) {
         var currentWidth = window.innerWidth;
         var invoiceElement = document.getElementsByClassName("print-invoice");
-        if (invoiceElement !== undefined) {
+        if (invoiceElement.length > 0) {
             invoiceElement[0].style.maxWidth = "1000px";
 
             if (currentWidth < 700) {
@@ -34,6 +37,7 @@ var CommonUtils = (function () {
         }
     }
 
+    // inits behavior of some elements
     var init = function () {
         var tabList = document.getElementsByClassName("tab");
         for (var i = 0; i < tabList.length; i++) {
@@ -49,4 +53,5 @@ var CommonUtils = (function () {
     };
 })();
 
+// Calls the init method when the DOM was loaded
 document.addEventListener("DOMContentLoaded", CommonUtils.init);

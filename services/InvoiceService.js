@@ -2,30 +2,82 @@
  * Created by USER on 13/04/2017.
  */
 
-var db = require('../persistence/config/db');
+var Client = require('../models/Client');
 var Bill = require('../models/Bill');
 
-module.exports.createInvoice = function (req, res) {
-    var items = req.body.products;
-    var userName = req.body.userName;
-    var id = Math.round(Math.random() * 10000);
+var invoceService = (function () {
+    // Adds an invoice to the client
+    var createInvoice = function (req, res) {
+        var filter = {
+            userName: req.body.userName
+        };
+        var items = req.body.products;
+        var id = Math.round(Math.random() * 10000);
+        var newBill = new Bill(id.toString());
 
-    var newBill = new Bill(id, userName);
-    newBill.createBill(items);
+        newBill.createBill(items);
+        Client.updateOne(filter, {
+            $push: {
+                bills: newBill
+            }
+        }, function (err, result) {
+            if (err) {
+                res.status(500).jsonp({
+                    message: "Error generando la factura"
+                });
+                return;
+            }
 
-    db.bills.push(newBill);
-    res.status(200).jsonp(newBill);
-};
+            res.status(200).jsonp(newBill);
+        });
+    };
 
-module.exports.getInvoice = function (req, res) {
-    var id = Number(req.query.invoiceId);
-    var bill = db.bills.find(function(item) {
-        return item.id === id;
-    });
+    // Gets the full invoice info
+    var getInvoice = function (req, res) {
+        var filter = {
+            userName: req.query.userName
+        };
 
-    res.status(200).jsonp(bill);
-};
+        Client.findOne(filter, { bills: { $elemMatch: { id: req.query.invoiceId }}},
+        function (err, client) {
+            if (err) {
+                res.status(500).jsonp({
+                    message: "Error cargando los productos"
+                });
+                return;
+            }
 
-module.exports.getHistory = function (req, res) {
-    res.status(200).jsonp(db.bills);
-};
+            if(client.bills.length === 0)
+                res.status(404).jsonp({ message: "Factura no ha sido encontrada" });
+            else
+                res.status(200).jsonp(client.bills[0]);
+        });
+    };
+
+    // Gets the history of all the purchases
+    var getHistory = function (req, res) {
+        var filter = {
+            userName: req.query.userName
+        };
+
+        // items are not being included when retrieving the history, as that could be heavy
+        Client.findOne(filter, { 'bills.items': 0 }, function (err, client) {
+            if (err) {
+                res.status(500).jsonp({
+                    message: "Error cargando los productos"
+                });
+                return;
+            }
+
+            res.status(200).jsonp(client.bills);
+        });
+    };
+
+    return {
+        createInvoice,
+        getInvoice,
+        getHistory
+    };
+})();
+
+module.exports = invoceService;

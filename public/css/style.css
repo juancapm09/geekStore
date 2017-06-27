@@ -23,7 +23,8 @@ a {
     text-align: center;
 }
 
-.product button>span, .history-list button>span {
+.product button>span,
+.history-list button>span {
     color: green;
 }
 
@@ -91,12 +92,14 @@ button>span {
     border: solid 1px black;
 }
 
-.cart-list tr:first-child, .history-list tr:first-child,
+.cart-list tr:first-child,
+.history-list tr:first-child,
 .invoice tr:first-child {
     font-weight: 900;
 }
 
-.cart-list tr:nth-child(even), .history-list tr:nth-child(even),
+.cart-list tr:nth-child(even),
+.history-list tr:nth-child(even),
 .invoice tr:first-child {
     background-color: #CCC;
 }
@@ -147,7 +150,8 @@ button>span {
     margin: 0.25em;
 }
 
-.nav-pills>li.active, .nav-pills>li.active:hover {
+.nav-pills>li.active,
+.nav-pills>li.active:hover {
     color: #000;
     background-color: #a6c307;
     font-weight: bold;
@@ -181,17 +185,28 @@ button>span {
     margin-bottom: 0.5em;
 }
 
+.error {
+    position: fixed;
+    right: 2.5%;
+    top: 2.5%;
+    font-size: 1.2em;
+    z-index: 100;
+    padding: 0.5em;
+    background-color: lightpink;
+    border: solid 2px red;
+    cursor: pointer;
+    width: 15em;
+}
+
 @media screen and (max-width: 450px) {
     .container {
         padding-left: 0;
         padding-right: 0;
     }
-
     .outer-container {
         overflow: scroll;
         width: 100%;
     }
-
     .print-invoice {
         max-width: 450px;
     }

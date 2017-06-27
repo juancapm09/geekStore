@@ -2,8 +2,24 @@
  * Created by USER on 13/04/2017.
  */
 
-var db = require('../persistence/config/db');
+var Product = require('../models/Product');
 
-module.exports.getProducts = function (req, res) {
-    res.status(200).jsonp(db.stock);
-};
+var productService = (function () {
+    // Gets the list of available products
+    var getProducts = function (req, res) {
+        Product.find({}, function (err, products) {
+            if (err) {
+                res.staus(500).jsonp({
+                    message: "Error cargando los productos"
+                });
+                return;
+            }
+
+            res.status(200).jsonp(products);
+        });
+    };
+
+    return { getProducts };
+})();
+
+module.exports = productService;

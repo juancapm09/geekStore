@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 //Controllers
 var controllers = require("./controllers/Controllers");
+var mongoDB = require("./persistence/mongoDB");
 var app = express();
 
 // view engine setup
@@ -26,6 +27,7 @@ app.use(function(req, res, next) {
     next();
 });
 
+mongoDB.initMongoDB();
 controllers(app);
 
 // catch 404 and forward to error handler

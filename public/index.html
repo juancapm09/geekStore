@@ -14,6 +14,7 @@
 
 <body>
     <div class="container" ng-controller="ProductsController">
+        <div class="error" ng-if="errorMessage !== undefined" ng-click="closeError()">{{errorMessage}}</div>
         <h1 class="hidden-print">Tienda de Figuras de Coleccion</h1>
         <div class="row hidden-print">
             <!-- To Buy List -->
@@ -28,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <hr>
+        <hr class="hidden-print">
         <div class="row hidden-print">
             <div class="col-md-12">
                 <h2>Productos Agregados</h2>
@@ -53,7 +54,7 @@
             </div>
             <!-- Already Bought List -->
         </div>
-        <hr>
+        <hr class="hidden-print">
         <div class="row">
             <ul class="nav nav-pills hidden-print">
                 <li id="invoice" class="tab active">Factura</li>
@@ -73,7 +74,7 @@
                                 <div class="invoice-details">
                                     <div class="emptyMessage">Factura N° {{invoice.id}}</div>
                                     <div><b>Fecha:</b> {{invoice.date}}</div>
-                                    <div><b>Cliente:</b> {{invoice.userName}}</div>
+                                    <div><b>Cliente:</b> {{loggedUser}}</div>
                                 </div>
                                 <table class="invoice">
                                     <tr>

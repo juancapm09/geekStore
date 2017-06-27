@@ -1,10 +1,17 @@
 "use strict"
 
-function Product (id, name, price, currency) {
-    this.id = id;
-    this.name = name;
-    this.price = price;
-    this.currency = currency;
-}
+var Joi = require('joi');
+var MongoModels = require('mongo-models');
+
+class Product extends MongoModels { }
+
+Product.collection = 'products';
+
+Product.Schema = Joi.object().keys({
+    id: Joi.string().required(),
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    currency: Joi.string().required()
+});
 
 module.exports = Product;

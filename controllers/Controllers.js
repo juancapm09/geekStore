@@ -15,9 +15,12 @@ var ProductsController = require('./ProductsController');
  * @param app
  */
 function Controllers(app){
+    // Invoices services
     app.post('/api/postInvoice', InvoicesController.createInvoice);
     app.get('/api/getInvoice', InvoicesController.getInvoice);
     app.get('/api/getHistory', InvoicesController.getHistory);
+
+    // products services
     app.get('/api/getProducts', ProductsController.getProducts);
   }
 

@@ -5,6 +5,12 @@
 
 var productsService = require("../services/ProductsService");
 
-exports.getProducts = function (req, res) {
-    productsService.getProducts(req, res);
-};
+var ProductsController = (function () {
+    var getProducts = function (req, res) {
+        productsService.getProducts(req, res);
+    };
+
+    return { getProducts };
+})();
+
+module.exports = ProductsController;
